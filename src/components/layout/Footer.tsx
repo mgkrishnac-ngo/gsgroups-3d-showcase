@@ -1,0 +1,202 @@
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { 
+  Twitter, 
+  Linkedin, 
+  Github, 
+  Youtube, 
+  Mail, 
+  Phone, 
+  MapPin,
+  ArrowUpRight,
+  Send
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+const services = [
+  { name: 'AI Apps', href: '/services/ai-apps' },
+  { name: 'AI Trainer', href: '/services/ai-trainer' },
+  { name: 'AI Solutions', href: '/services/ai-solutions' },
+  { name: 'Software Development', href: '/services/software-development' },
+  { name: 'Digital Marketing', href: '/services/digital-marketing' },
+  { name: 'Mobile Apps', href: '/services/mobile-apps' },
+  { name: 'AI Agents', href: '/services/ai-agents' },
+];
+
+const company = [
+  { name: 'About Us', href: '/about' },
+  { name: 'Careers', href: '/careers' },
+  { name: 'Case Studies', href: '/case-studies' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Partners', href: '/partners' },
+  { name: 'Contact', href: '/contact' },
+];
+
+const legal = [
+  { name: 'Privacy Policy', href: '/privacy' },
+  { name: 'Terms of Service', href: '/terms' },
+  { name: 'Cookie Policy', href: '/cookies' },
+  { name: 'GDPR', href: '/gdpr' },
+];
+
+const socials = [
+  { name: 'Twitter', icon: Twitter, href: '#' },
+  { name: 'LinkedIn', icon: Linkedin, href: '#' },
+  { name: 'GitHub', icon: Github, href: '#' },
+  { name: 'YouTube', icon: Youtube, href: '#' },
+];
+
+const Footer = () => {
+  return (
+    <footer className="relative bg-card border-t border-border overflow-hidden">
+      {/* Wave Separator */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
+      
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-gradient-mesh opacity-30" />
+      
+      <div className="container mx-auto px-6 py-16 relative z-10">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+          {/* Brand Section */}
+          <div className="lg:col-span-2 space-y-6">
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center overflow-hidden">
+                <span className="text-primary-foreground font-orbitron font-bold text-xl">GS</span>
+              </div>
+              <span className="font-display font-bold text-2xl gradient-text">GSGROUPS</span>
+            </Link>
+            
+            <p className="text-muted-foreground max-w-md">
+              Empowering businesses with cutting-edge AI solutions and digital transformation services. 
+              From startups to enterprises, we deliver innovation at scale.
+            </p>
+            
+            {/* Newsletter */}
+            <div className="space-y-3">
+              <h4 className="font-semibold text-foreground">Subscribe to our newsletter</h4>
+              <div className="flex gap-2">
+                <Input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  className="bg-muted/50 border-border focus:border-primary"
+                />
+                <Button className="btn-hero px-4">
+                  <Send className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+            
+            {/* Social Links */}
+            <div className="flex gap-3">
+              {socials.map((social) => (
+                <motion.a
+                  key={social.name}
+                  href={social.href}
+                  whileHover={{ y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-10 h-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  <social.icon className="w-5 h-5" />
+                </motion.a>
+              ))}
+            </div>
+          </div>
+          
+          {/* Services */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-foreground">Services</h4>
+            <ul className="space-y-3">
+              {services.map((item) => (
+                <li key={item.name}>
+                  <Link 
+                    to={item.href}
+                    className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 group"
+                  >
+                    {item.name}
+                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          {/* Company */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-foreground">Company</h4>
+            <ul className="space-y-3">
+              {company.map((item) => (
+                <li key={item.name}>
+                  <Link 
+                    to={item.href}
+                    className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 group"
+                  >
+                    {item.name}
+                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-foreground">Contact</h4>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3 text-muted-foreground">
+                <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <span>123 Innovation Drive<br />Tech City, TC 12345</span>
+              </li>
+              <li className="flex items-center gap-3 text-muted-foreground">
+                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                <a href="mailto:hello@gsgroups.com" className="hover:text-primary transition-colors">
+                  hello@gsgroups.com
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-muted-foreground">
+                <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                <a href="tel:+1234567890" className="hover:text-primary transition-colors">
+                  +1 (234) 567-890
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} GSGROUPS. All rights reserved.
+          </p>
+          
+          <div className="flex flex-wrap justify-center gap-6">
+            {legal.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+      
+      {/* Scroll to Top */}
+      <motion.button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-glow z-50"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </motion.button>
+    </footer>
+  );
+};
+
+export default Footer;
