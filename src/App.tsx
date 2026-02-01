@@ -11,6 +11,22 @@ import ServiceDetail from "./pages/ServiceDetail";
 import CaseStudies from "./pages/CaseStudies";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
+import Careers from "./pages/Careers";
+import Pricing from "./pages/Pricing";
+import Partners from "./pages/Partners";
+import FAQ from "./pages/FAQ";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Refund from "./pages/Refund";
+import Newsletter from "./pages/Newsletter";
+import Demo from "./pages/Demo";
+import Consultation from "./pages/Consultation";
+import Resources from "./pages/Resources";
+import Industries from "./pages/Industries";
+import SuccessStories from "./pages/SuccessStories";
+import BlogPage from "./pages/BlogPage";
+import Webinars from "./pages/Webinars";
+import TechStack from "./pages/TechStack";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +43,22 @@ const App = () => (
           <Route path="/services" element={<Services />} />
           <Route path="/services/:slug" element={<ServiceDetail />} />
           <Route path="/case-studies" element={<CaseStudies />} />
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/partners" element={<Partners />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/refund" element={<Refund />} />
+          <Route path="/newsletter" element={<Newsletter />} />
+          <Route path="/demo" element={<Demo />} />
+          <Route path="/consultation" element={<Consultation />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/industries" element={<Industries />} />
+          <Route path="/success-stories" element={<SuccessStories />} />
+          <Route path="/webinars" element={<Webinars />} />
+          <Route path="/tech-stack" element={<TechStack />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
