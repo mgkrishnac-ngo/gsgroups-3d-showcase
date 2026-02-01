@@ -20,19 +20,35 @@ const services = [
   { name: 'Data Center Provider', href: '/services/data-center', description: 'Enterprise-scale infrastructure' },
 ];
 
+const companyLinks = [
+  { name: 'About Us', href: '/about' },
+  { name: 'Careers', href: '/careers' },
+  { name: 'Partners', href: '/partners' },
+  { name: 'Success Stories', href: '/success-stories' },
+];
+
+const resourceLinks = [
+  { name: 'Blog', href: '/blog' },
+  { name: 'Resources', href: '/resources' },
+  { name: 'Webinars', href: '/webinars' },
+  { name: 'FAQ', href: '/faq' },
+];
+
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Services', href: '/services', hasDropdown: true },
+  { name: 'Services', href: '/services', hasDropdown: true, dropdownType: 'services' },
+  { name: 'Industries', href: '/industries' },
   { name: 'Case Studies', href: '/case-studies' },
-  { name: 'Blog', href: '/blog' },
+  { name: 'Company', href: '/about', hasDropdown: true, dropdownType: 'company' },
+  { name: 'Resources', href: '/resources', hasDropdown: true, dropdownType: 'resources' },
+  { name: 'Pricing', href: '/pricing' },
   { name: 'Contact', href: '/contact' },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -45,8 +61,21 @@ const Header = () => {
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setIsServicesOpen(false);
+    setOpenDropdown(null);
   }, [location]);
+
+  const getDropdownItems = (type: string) => {
+    switch (type) {
+      case 'services':
+        return services;
+      case 'company':
+        return companyLinks.map(l => ({ ...l, description: '' }));
+      case 'resources':
+        return resourceLinks.map(l => ({ ...l, description: '' }));
+      default:
+        return [];
+    }
+  };
 
   return (
     <header
@@ -72,28 +101,28 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => (
               <div key={link.name} className="relative">
                 {link.hasDropdown ? (
                   <div
                     className="relative"
-                    onMouseEnter={() => setIsServicesOpen(true)}
-                    onMouseLeave={() => setIsServicesOpen(false)}
+                    onMouseEnter={() => setOpenDropdown(link.dropdownType || null)}
+                    onMouseLeave={() => setOpenDropdown(null)}
                   >
                     <button
                       className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
-                        location.pathname.startsWith('/services')
+                        location.pathname.startsWith(link.href)
                           ? 'text-primary'
                           : 'text-muted-foreground'
                       }`}
                     >
                       {link.name}
-                      <ChevronDown className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+                      <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === link.dropdownType ? 'rotate-180' : ''}`} />
                     </button>
                     
                     <AnimatePresence>
-                      {isServicesOpen && (
+                      {openDropdown === link.dropdownType && (
                         <motion.div
                           initial={{ opacity: 0, y: 10, scale: 0.95 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -101,19 +130,21 @@ const Header = () => {
                           transition={{ duration: 0.2 }}
                           className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
                         >
-                          <div className="glass-card p-6 w-[600px] grid grid-cols-2 gap-3 shadow-2xl">
-                            {services.map((service) => (
+                          <div className={`glass-card p-4 shadow-2xl ${link.dropdownType === 'services' ? 'w-[600px] grid grid-cols-2 gap-2' : 'w-[220px] space-y-1'}`}>
+                            {getDropdownItems(link.dropdownType || '').map((item) => (
                               <Link
-                                key={service.href}
-                                to={service.href}
-                                className="p-3 rounded-lg hover:bg-muted/50 transition-colors group/item"
+                                key={item.href}
+                                to={item.href}
+                                className="p-3 rounded-lg hover:bg-muted/50 transition-colors group/item block"
                               >
-                                <span className="font-medium text-foreground group-hover/item:text-primary transition-colors">
-                                  {service.name}
+                                <span className="font-medium text-foreground group-hover/item:text-primary transition-colors text-sm">
+                                  {item.name}
                                 </span>
-                                <p className="text-xs text-muted-foreground mt-0.5">
-                                  {service.description}
-                                </p>
+                                {item.description && (
+                                  <p className="text-xs text-muted-foreground mt-0.5">
+                                    {item.description}
+                                  </p>
+                                )}
                               </Link>
                             ))}
                           </div>
@@ -140,10 +171,10 @@ const Header = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-4">
             <Button variant="ghost" className="text-sm" asChild>
-              <Link to="/login">Sign In</Link>
+              <Link to="/demo">Get Demo</Link>
             </Button>
             <Button className="btn-hero text-sm py-2 px-5" asChild>
-              <Link to="/contact">Get Started</Link>
+              <Link to="/consultation">Free Consultation</Link>
             </Button>
           </div>
 
@@ -171,27 +202,27 @@ const Header = () => {
                     {link.hasDropdown ? (
                       <div className="space-y-2">
                         <button
-                          onClick={() => setIsServicesOpen(!isServicesOpen)}
+                          onClick={() => setOpenDropdown(openDropdown === link.dropdownType ? null : (link.dropdownType || null))}
                           className="flex items-center gap-2 text-foreground font-medium w-full"
                         >
                           {link.name}
-                          <ChevronDown className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+                          <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === link.dropdownType ? 'rotate-180' : ''}`} />
                         </button>
                         <AnimatePresence>
-                          {isServicesOpen && (
+                          {openDropdown === link.dropdownType && (
                             <motion.div
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: 'auto' }}
                               exit={{ opacity: 0, height: 0 }}
                               className="pl-4 space-y-2"
                             >
-                              {services.map((service) => (
+                              {getDropdownItems(link.dropdownType || '').map((item) => (
                                 <Link
-                                  key={service.href}
-                                  to={service.href}
+                                  key={item.href}
+                                  to={item.href}
                                   className="block text-muted-foreground hover:text-primary transition-colors py-1"
                                 >
-                                  {service.name}
+                                  {item.name}
                                 </Link>
                               ))}
                             </motion.div>
@@ -214,10 +245,10 @@ const Header = () => {
                 ))}
                 <div className="pt-4 space-y-3 border-t border-border">
                   <Button variant="outline" className="w-full" asChild>
-                    <Link to="/login">Sign In</Link>
+                    <Link to="/demo">Get Demo</Link>
                   </Button>
                   <Button className="w-full btn-hero" asChild>
-                    <Link to="/contact">Get Started</Link>
+                    <Link to="/consultation">Free Consultation</Link>
                   </Button>
                 </div>
               </div>

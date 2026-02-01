@@ -31,13 +31,23 @@ const company = [
   { name: 'Blog', href: '/blog' },
   { name: 'Partners', href: '/partners' },
   { name: 'Contact', href: '/contact' },
+  { name: 'Pricing', href: '/pricing' },
+  { name: 'FAQ', href: '/faq' },
+];
+
+const resources = [
+  { name: 'Resources', href: '/resources' },
+  { name: 'Webinars', href: '/webinars' },
+  { name: 'Newsletter', href: '/newsletter' },
+  { name: 'Tech Stack', href: '/tech-stack' },
+  { name: 'Industries', href: '/industries' },
+  { name: 'Success Stories', href: '/success-stories' },
 ];
 
 const legal = [
   { name: 'Privacy Policy', href: '/privacy' },
   { name: 'Terms of Service', href: '/terms' },
-  { name: 'Cookie Policy', href: '/cookies' },
-  { name: 'GDPR', href: '/gdpr' },
+  { name: 'Refund Policy', href: '/refund' },
 ];
 
 const socials = [
@@ -58,7 +68,7 @@ const Footer = () => {
       
       <div className="container mx-auto px-6 py-16 relative z-10">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
           {/* Brand Section */}
           <div className="lg:col-span-2 space-y-6">
             <Link to="/" className="flex items-center gap-2 group">
