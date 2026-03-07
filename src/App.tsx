@@ -25,6 +25,8 @@ import Resources from "./pages/Resources";
 import Industries from "./pages/Industries";
 import SuccessStories from "./pages/SuccessStories";
 import BlogPage from "./pages/BlogPage";
+import BlogPostDetail from "./pages/BlogPostDetail";
+import CaseStudyDetail from "./pages/CaseStudyDetail";
 import Webinars from "./pages/Webinars";
 import TechStack from "./pages/TechStack";
 
