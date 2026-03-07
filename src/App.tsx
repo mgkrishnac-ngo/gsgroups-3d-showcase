@@ -25,6 +25,8 @@ import Resources from "./pages/Resources";
 import Industries from "./pages/Industries";
 import SuccessStories from "./pages/SuccessStories";
 import BlogPage from "./pages/BlogPage";
+import BlogPostDetail from "./pages/BlogPostDetail";
+import CaseStudyDetail from "./pages/CaseStudyDetail";
 import Webinars from "./pages/Webinars";
 import TechStack from "./pages/TechStack";
 
@@ -44,6 +46,8 @@ const App = () => (
           <Route path="/services/:slug" element={<ServiceDetail />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostDetail />} />
+          <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/partners" element={<Partners />} />
