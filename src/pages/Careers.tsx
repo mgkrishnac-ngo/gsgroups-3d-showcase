@@ -5,6 +5,7 @@ import { Float, MeshDistortMaterial } from '@react-three/drei';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { MapPin, Clock, Users, Zap, Heart, Rocket, Coffee, GraduationCap } from 'lucide-react';
+import { GradientMorphOrbs } from '@/components/HeroAnimations';
 
 const FloatingCube = () => (
   <Float speed={2} rotationIntensity={1} floatIntensity={2}>
@@ -72,6 +73,7 @@ const Careers = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <GradientMorphOrbs />
         <div className="absolute inset-0 z-0">
           <Canvas camera={{ position: [0, 0, 5] }}>
             <ambientLight intensity={0.5} />

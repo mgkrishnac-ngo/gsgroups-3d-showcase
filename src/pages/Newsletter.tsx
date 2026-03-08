@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Mail, Sparkles, TrendingUp, Lightbulb, Zap } from 'lucide-react';
+import { AuroraWaves } from '@/components/HeroAnimations';
 import { useState } from 'react';
 
 const FloatingEnvelope = () => (
@@ -43,6 +44,7 @@ const Newsletter = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        <AuroraWaves />
         <div className="absolute inset-0 z-0 opacity-50">
           <Canvas camera={{ position: [0, 0, 5] }}>
             <ambientLight intensity={0.5} />

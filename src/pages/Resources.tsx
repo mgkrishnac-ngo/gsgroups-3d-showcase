@@ -15,6 +15,7 @@ import {
   CheckCircle,
   ArrowRight
 } from 'lucide-react';
+import { ParticleWave } from '@/components/HeroAnimations';
 
 const FloatingToolbox = () => (
   <Float speed={2} rotationIntensity={0.5} floatIntensity={1.5}>
@@ -78,6 +79,7 @@ const Resources = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+        <ParticleWave />
         <div className="absolute inset-0 z-0 opacity-50">
           <Canvas camera={{ position: [0, 0, 5] }}>
             <ambientLight intensity={0.5} />

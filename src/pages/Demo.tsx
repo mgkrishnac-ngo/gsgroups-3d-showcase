@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Play, CheckCircle, Clock, Users, Zap } from 'lucide-react';
+import { DiagonalSweep } from '@/components/HeroAnimations';
 
 const FloatingScreen = () => (
   <Float speed={1.5} rotationIntensity={0.3} floatIntensity={1}>
@@ -32,8 +33,9 @@ const features = [
 const Demo = () => {
   return (
     <Layout>
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
+      <section className="relative py-20 px-4 overflow-hidden">
+        <DiagonalSweep />
+        <div className="container mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left - Form */}
             <motion.div

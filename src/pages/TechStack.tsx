@@ -5,6 +5,7 @@ import { Float, MeshDistortMaterial, OrbitControls } from '@react-three/drei';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Cpu, Database, Cloud, Shield, Zap, GitBranch, Box, Layers } from 'lucide-react';
+import { PulsingRings } from '@/components/HeroAnimations';
 
 const FloatingTech = () => (
   <Float speed={2} rotationIntensity={1} floatIntensity={1.5}>
@@ -99,6 +100,7 @@ const TechStack = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+        <PulsingRings />
         <div className="absolute inset-0 z-0 opacity-40">
           <Canvas camera={{ position: [0, 0, 5] }}>
             <ambientLight intensity={0.5} />

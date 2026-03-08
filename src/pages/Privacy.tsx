@@ -1,10 +1,12 @@
 import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
+import { GradientMorphOrbs } from '@/components/HeroAnimations';
 
 const Privacy = () => {
   return (
     <Layout>
-      <section className="py-20 px-4">
+      <section className="relative py-20 px-4 overflow-hidden">
+        <GradientMorphOrbs />
         <div className="container mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
