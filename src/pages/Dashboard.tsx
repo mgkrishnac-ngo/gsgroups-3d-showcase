@@ -54,6 +54,9 @@ const Dashboard = () => {
                   <Settings className="w-5 h-5 text-primary" /> Admin Panel
                 </h2>
                 <p className="text-muted-foreground mb-4">Manage users, view submissions, and configure settings.</p>
+                <Link to="/admin/cms">
+                  <Button className="mb-4"><FileText className="w-4 h-4 mr-2" />Open CMS Dashboard</Button>
+                </Link>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="bg-muted rounded-lg p-4">
                     <p className="text-sm text-muted-foreground">Contact Submissions</p>
