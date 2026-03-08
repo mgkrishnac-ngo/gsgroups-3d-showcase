@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AIChatbot from "@/components/AIChatbot";
+import { WhatsAppCTA } from "@/components/SocialShare";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
