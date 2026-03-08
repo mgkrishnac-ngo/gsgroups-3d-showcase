@@ -87,7 +87,7 @@ const Contact = () => {
                 <h2 className="text-2xl font-display font-bold">Send a Message</h2>
               </div>
               
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>

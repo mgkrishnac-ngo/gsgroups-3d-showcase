@@ -78,7 +78,9 @@ const BlogPage = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 relative overflow-hidden">
+        <ParticleWave />
+        <AuroraWaves />
         <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
