@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { ArrowRight, TrendingUp, Building2, ShoppingCart, Stethoscope, GraduationCap, Factory } from 'lucide-react';
+import { GradientMorphOrbs, PulsingRings } from '@/components/HeroAnimations';
 
 const industries = [
   {
