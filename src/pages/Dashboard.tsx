@@ -3,8 +3,8 @@ import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { User, Settings, CreditCard, BarChart3, LogOut } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { User, Settings, CreditCard, BarChart3, LogOut, FileText } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const { user, userRole, signOut } = useAuth();
