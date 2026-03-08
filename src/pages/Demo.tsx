@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Play, CheckCircle, Clock, Users, Zap } from 'lucide-react';
+import { DiagonalSweep } from '@/components/HeroAnimations';
 
 const FloatingScreen = () => (
   <Float speed={1.5} rotationIntensity={0.3} floatIntensity={1}>
