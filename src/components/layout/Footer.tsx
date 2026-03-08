@@ -51,10 +51,10 @@ const legal = [
 ];
 
 const socials = [
-  { name: 'Twitter', icon: Twitter, href: '#' },
-  { name: 'LinkedIn', icon: Linkedin, href: '#' },
-  { name: 'GitHub', icon: Github, href: '#' },
-  { name: 'YouTube', icon: Youtube, href: '#' },
+  { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/gsgroups' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/gsgroups' },
+  { name: 'GitHub', icon: Github, href: 'https://github.com/gsgroups' },
+  { name: 'YouTube', icon: Youtube, href: 'https://youtube.com/@gsgroups' },
 ];
 
 const Footer = () => {

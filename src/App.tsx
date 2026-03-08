@@ -81,6 +81,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
           <AIChatbot />
+          <WhatsAppCTA />
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
