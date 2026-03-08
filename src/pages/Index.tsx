@@ -168,6 +168,11 @@ const Index = () => {
           </Suspense>
         </div>
         
+        {/* Hero Animations */}
+        <GradientMorphOrbs />
+        <FloatingGridLines />
+        <ParticleWave />
+        
         {/* Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background z-10" />
         <div className="absolute inset-0 bg-gradient-mesh z-10" />
