@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { MessageCircle, Search, HelpCircle, Mail, Phone } from 'lucide-react';
+import { FloatingGridLines, GradientMorphOrbs } from '@/components/HeroAnimations';
 
 const faqCategories = [
   {
