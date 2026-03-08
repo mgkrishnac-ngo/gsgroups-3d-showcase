@@ -101,7 +101,7 @@ const Contact = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" className="bg-muted/50" />
+                  <Input id="email" name="email" type="email" placeholder="john@example.com" className="bg-muted/50" />
                 </div>
                 
                 <div className="space-y-2">
