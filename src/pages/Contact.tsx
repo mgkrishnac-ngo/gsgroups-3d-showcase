@@ -106,7 +106,7 @@ const Contact = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="company">Company</Label>
-                  <Input id="company" placeholder="Your Company" className="bg-muted/50" />
+                  <Input id="company" name="company" placeholder="Your Company" className="bg-muted/50" />
                 </div>
                 
                 <div className="space-y-2">
