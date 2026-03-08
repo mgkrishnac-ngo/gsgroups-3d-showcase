@@ -14,6 +14,174 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          author: string | null
+          author_avatar: string | null
+          category: string | null
+          content: string | null
+          created_at: string
+          excerpt: string | null
+          featured: boolean | null
+          featured_image: string | null
+          id: string
+          published: boolean | null
+          published_at: string | null
+          read_time: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string | null
+          author_avatar?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured?: boolean | null
+          featured_image?: string | null
+          id?: string
+          published?: boolean | null
+          published_at?: string | null
+          read_time?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string | null
+          author_avatar?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured?: boolean | null
+          featured_image?: string | null
+          id?: string
+          published?: boolean | null
+          published_at?: string | null
+          read_time?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      case_studies: {
+        Row: {
+          challenge: string | null
+          client: string
+          created_at: string
+          featured_image: string | null
+          id: string
+          implementation: string[] | null
+          industry: string | null
+          overview: string | null
+          published: boolean | null
+          results: Json | null
+          services: string[] | null
+          slug: string
+          solution: string | null
+          testimonial_name: string | null
+          testimonial_quote: string | null
+          testimonial_role: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          challenge?: string | null
+          client: string
+          created_at?: string
+          featured_image?: string | null
+          id?: string
+          implementation?: string[] | null
+          industry?: string | null
+          overview?: string | null
+          published?: boolean | null
+          results?: Json | null
+          services?: string[] | null
+          slug: string
+          solution?: string | null
+          testimonial_name?: string | null
+          testimonial_quote?: string | null
+          testimonial_role?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          challenge?: string | null
+          client?: string
+          created_at?: string
+          featured_image?: string | null
+          id?: string
+          implementation?: string[] | null
+          industry?: string | null
+          overview?: string | null
+          published?: boolean | null
+          results?: Json | null
+          services?: string[] | null
+          slug?: string
+          solution?: string | null
+          testimonial_name?: string | null
+          testimonial_quote?: string | null
+          testimonial_role?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cms_services: {
+        Row: {
+          benefits: Json | null
+          color: string | null
+          created_at: string
+          description: string | null
+          features: string[] | null
+          icon: string | null
+          id: string
+          name: string
+          process: Json | null
+          published: boolean | null
+          slug: string
+          sort_order: number | null
+          tagline: string | null
+          updated_at: string
+        }
+        Insert: {
+          benefits?: Json | null
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          features?: string[] | null
+          icon?: string | null
+          id?: string
+          name: string
+          process?: Json | null
+          published?: boolean | null
+          slug: string
+          sort_order?: number | null
+          tagline?: string | null
+          updated_at?: string
+        }
+        Update: {
+          benefits?: Json | null
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          features?: string[] | null
+          icon?: string | null
+          id?: string
+          name?: string
+          process?: Json | null
+          published?: boolean | null
+          slug?: string
+          sort_order?: number | null
+          tagline?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       consultation_bookings: {
         Row: {
           company: string | null
