@@ -1,10 +1,21 @@
+import { useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { Float, MeshDistortMaterial } from '@react-three/drei';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, Zap, Star, Building2 } from 'lucide-react';
+import { Check, Zap, Star, Building2, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 const FloatingPrism = () => (
   <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1.5}>
@@ -18,7 +29,8 @@ const FloatingPrism = () => (
 const plans = [
   {
     name: 'Starter',
-    price: '$999',
+    price: 999,
+    displayPrice: '₹999',
     period: '/month',
     description: 'Perfect for startups and small businesses',
     icon: Zap,
@@ -34,7 +46,8 @@ const plans = [
   },
   {
     name: 'Professional',
-    price: '$2,499',
+    price: 2499,
+    displayPrice: '₹2,499',
     period: '/month',
     description: 'Ideal for growing companies',
     icon: Star,
@@ -52,7 +65,8 @@ const plans = [
   },
   {
     name: 'Enterprise',
-    price: 'Custom',
+    price: 0,
+    displayPrice: 'Custom',
     period: '',
     description: 'For large-scale operations',
     icon: Building2,
@@ -71,6 +85,100 @@ const plans = [
 ];
 
 const Pricing = () => {
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async (plan: typeof plans[0]) => {
+    if (plan.name === 'Enterprise') {
+      navigate('/consultation');
+      return;
+    }
+
+    if (!user) {
+      toast.error('Please login to subscribe');
+      navigate('/login');
+      return;
+    }
+
+    setLoadingPlan(plan.name);
+
+    try {
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) {
+        toast.error('Failed to load payment gateway');
+        setLoadingPlan(null);
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('create-razorpay-order', {
+        body: { amount: plan.price, currency: 'INR', plan: plan.name, user_id: user.id },
+      });
+
+      if (error || !data?.order_id) {
+        toast.error(data?.error || 'Failed to create order');
+        setLoadingPlan(null);
+        return;
+      }
+
+      const options = {
+        key: data.key_id,
+        amount: data.amount,
+        currency: data.currency,
+        name: 'GSGROUPS',
+        description: `${plan.name} Plan Subscription`,
+        order_id: data.order_id,
+        handler: async (response: any) => {
+          const { error: verifyError } = await supabase.functions.invoke('verify-razorpay-payment', {
+            body: {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            },
+          });
+
+          if (verifyError) {
+            toast.error('Payment verification failed');
+          } else {
+            toast.success(`Successfully subscribed to ${plan.name} plan!`);
+            navigate('/dashboard');
+          }
+        },
+        prefill: {
+          email: user.email,
+        },
+        theme: {
+          color: '#00d4ff',
+        },
+        modal: {
+          ondismiss: () => setLoadingPlan(null),
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      console.error('Payment error:', err);
+      toast.error('Something went wrong');
+    } finally {
+      setLoadingPlan(null);
+    }
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -133,7 +241,7 @@ const Pricing = () => {
                     <CardTitle className="text-2xl">{plan.name}</CardTitle>
                     <CardDescription>{plan.description}</CardDescription>
                     <div className="mt-4">
-                      <span className="text-4xl font-bold">{plan.price}</span>
+                      <span className="text-4xl font-bold">{plan.displayPrice}</span>
                       <span className="text-muted-foreground">{plan.period}</span>
                     </div>
                   </CardHeader>
@@ -149,8 +257,16 @@ const Pricing = () => {
                     <Button 
                       className={`w-full ${plan.popular ? 'bg-gradient-to-r from-primary to-accent' : ''}`}
                       variant={plan.popular ? 'default' : 'outline'}
+                      onClick={() => handlePayment(plan)}
+                      disabled={loadingPlan === plan.name}
                     >
-                      {plan.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}
+                      {loadingPlan === plan.name ? (
+                        <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Processing...</>
+                      ) : plan.name === 'Enterprise' ? (
+                        'Contact Sales'
+                      ) : (
+                        'Get Started'
+                      )}
                     </Button>
                   </CardContent>
                 </Card>
@@ -173,10 +289,10 @@ const Pricing = () => {
               Our team is here to help you choose the right plan for your business needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" onClick={() => navigate('/faq')}>
                 View FAQ
               </Button>
-              <Button size="lg" className="bg-gradient-to-r from-primary to-accent">
+              <Button size="lg" className="bg-gradient-to-r from-primary to-accent" onClick={() => navigate('/consultation')}>
                 Schedule a Call
               </Button>
             </div>
