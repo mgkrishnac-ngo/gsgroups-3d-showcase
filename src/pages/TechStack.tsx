@@ -5,6 +5,7 @@ import { Float, MeshDistortMaterial, OrbitControls } from '@react-three/drei';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Cpu, Database, Cloud, Shield, Zap, GitBranch, Box, Layers } from 'lucide-react';
+import { PulsingRings } from '@/components/HeroAnimations';
 
 const FloatingTech = () => (
   <Float speed={2} rotationIntensity={1} floatIntensity={1.5}>
