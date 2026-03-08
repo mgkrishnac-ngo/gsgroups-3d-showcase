@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { 
   Mail, 
   Phone, 
@@ -13,6 +13,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import Layout from '@/components/layout/Layout';
+import SocialShare, { GoogleMapEmbed } from '@/components/SocialShare';
+import { AuroraWaves } from '@/components/HeroAnimations';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'hello@gsgroups.com', href: 'mailto:hello@gsgroups.com' },
