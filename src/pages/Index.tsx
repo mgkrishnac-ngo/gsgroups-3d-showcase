@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { GradientMorphOrbs, FloatingGridLines, ParticleWave, DiagonalSweep, PulsingRings, AuroraWaves } from '@/components/HeroAnimations';
 import { 
   ArrowRight, 
   Sparkles, 
