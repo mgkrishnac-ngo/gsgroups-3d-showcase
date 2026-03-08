@@ -5,6 +5,7 @@ import { Float, MeshDistortMaterial } from '@react-three/drei';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Handshake, TrendingUp, Shield, Globe, Users, Award } from 'lucide-react';
+import { FloatingGridLines } from '@/components/HeroAnimations';
 
 const FloatingRing = () => (
   <Float speed={2} rotationIntensity={1} floatIntensity={1}>
