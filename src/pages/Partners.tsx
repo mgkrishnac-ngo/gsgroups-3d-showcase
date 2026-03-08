@@ -54,6 +54,7 @@ const Partners = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <FloatingGridLines />
         <div className="absolute inset-0 z-0 opacity-50">
           <Canvas camera={{ position: [0, 0, 5] }}>
             <ambientLight intensity={0.5} />

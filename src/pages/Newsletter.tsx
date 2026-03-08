@@ -44,6 +44,7 @@ const Newsletter = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        <AuroraWaves />
         <div className="absolute inset-0 z-0 opacity-50">
           <Canvas camera={{ position: [0, 0, 5] }}>
             <ambientLight intensity={0.5} />

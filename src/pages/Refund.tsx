@@ -2,11 +2,13 @@ import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Mail } from 'lucide-react';
+import { AuroraWaves } from '@/components/HeroAnimations';
 
 const Refund = () => {
   return (
     <Layout>
-      <section className="py-20 px-4">
+      <section className="relative py-20 px-4 overflow-hidden">
+        <AuroraWaves />
         <div className="container mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

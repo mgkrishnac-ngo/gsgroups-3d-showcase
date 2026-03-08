@@ -33,8 +33,9 @@ const features = [
 const Demo = () => {
   return (
     <Layout>
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
+      <section className="relative py-20 px-4 overflow-hidden">
+        <DiagonalSweep />
+        <div className="container mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left - Form */}
             <motion.div
