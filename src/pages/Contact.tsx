@@ -112,7 +112,8 @@ const Contact = () => {
                 <div className="space-y-2">
                   <Label htmlFor="service">Service Interested In</Label>
                   <select 
-                    id="service" 
+                    id="service"
+                    name="service"
                     className="w-full px-3 py-2 rounded-md bg-muted/50 border border-border focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="">Select a service</option>
