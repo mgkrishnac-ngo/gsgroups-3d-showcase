@@ -38,6 +38,7 @@ import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
+import AdminCMS from "./pages/AdminCMS";
 
 const queryClient = new QueryClient();
 
