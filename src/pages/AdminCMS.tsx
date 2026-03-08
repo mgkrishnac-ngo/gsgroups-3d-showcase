@@ -136,6 +136,8 @@ const AdminCMS = () => {
               <TabsList className="mb-6">
                 <TabsTrigger value="posts" className="gap-2"><FileText className="w-4 h-4" />Blog Posts</TabsTrigger>
                 <TabsTrigger value="studies" className="gap-2"><Briefcase className="w-4 h-4" />Case Studies</TabsTrigger>
+                <TabsTrigger value="contacts" className="gap-2"><Mail className="w-4 h-4" />Contacts</TabsTrigger>
+                <TabsTrigger value="bookings" className="gap-2"><CalendarCheck className="w-4 h-4" />Bookings</TabsTrigger>
               </TabsList>
 
               <TabsContent value="posts">
