@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Mail, Sparkles, TrendingUp, Lightbulb, Zap } from 'lucide-react';
+import { AuroraWaves } from '@/components/HeroAnimations';
 import { useState } from 'react';
 
 const FloatingEnvelope = () => (
