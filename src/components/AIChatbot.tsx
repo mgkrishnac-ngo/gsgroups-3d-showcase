@@ -1,47 +1,113 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
 interface Message {
   id: number;
-  text: string;
-  isBot: boolean;
+  content: string;
+  role: 'user' | 'assistant';
 }
 
-const botResponses: Record<string, string> = {
-  default: "Thanks for reaching out! I'm GSGROUPS AI assistant. How can I help you today?",
-  services: "We offer AI/ML solutions, custom software development, cloud services, data analytics, and more. Visit our Services page for details!",
-  pricing: "Our pricing is customized per project. Visit /pricing or book a free consultation at /consultation.",
-  contact: "You can reach us at /contact or email hello@gsgroups.com. We typically respond within 24 hours.",
-  demo: "Book a free demo at /demo to see our AI solutions in action!",
-};
-
-const getResponse = (input: string): string => {
-  const lower = input.toLowerCase();
-  if (lower.includes('service') || lower.includes('solution') || lower.includes('offer')) return botResponses.services;
-  if (lower.includes('price') || lower.includes('cost') || lower.includes('plan')) return botResponses.pricing;
-  if (lower.includes('contact') || lower.includes('reach') || lower.includes('email')) return botResponses.contact;
-  if (lower.includes('demo') || lower.includes('trial')) return botResponses.demo;
-  return botResponses.default;
-};
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: "Hi! I'm the GSGROUPS AI Assistant. How can I help you?", isBot: true },
+    { id: 1, content: "Hi! I'm the GSGROUPS AI Assistant. How can I help you today?", role: 'assistant' },
   ]);
   const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
-    const userMsg: Message = { id: Date.now(), text: input, isBot: false };
-    setMessages((prev) => [...prev, userMsg]);
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const sendMessage = async () => {
+    if (!input.trim() || isLoading) return;
+    const userMsg: Message = { id: Date.now(), content: input, role: 'user' };
+    const currentMessages = [...messages, userMsg];
+    setMessages(currentMessages);
     setInput('');
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { id: Date.now() + 1, text: getResponse(input), isBot: true }]);
-    }, 800);
+    setIsLoading(true);
+
+    let assistantSoFar = '';
+
+    try {
+      const resp = await fetch(CHAT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({
+          messages: currentMessages.map(m => ({ role: m.role, content: m.content })),
+        }),
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({ error: 'Request failed' }));
+        if (resp.status === 429) toast.error('Too many requests. Please wait a moment.');
+        else if (resp.status === 402) toast.error('AI service temporarily unavailable.');
+        else toast.error(err.error || 'Something went wrong');
+        setIsLoading(false);
+        return;
+      }
+
+      if (!resp.body) throw new Error('No response body');
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = '';
+      let streamDone = false;
+
+      while (!streamDone) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf('\n')) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+          if (line.endsWith('\r')) line = line.slice(0, -1);
+          if (line.startsWith(':') || line.trim() === '') continue;
+          if (!line.startsWith('data: ')) continue;
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === '[DONE]') { streamDone = true; break; }
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantSoFar += content;
+              setMessages(prev => {
+                const last = prev[prev.length - 1];
+                if (last?.role === 'assistant' && last.id === -1) {
+                  return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: assistantSoFar } : m);
+                }
+                return [...prev, { id: -1, content: assistantSoFar, role: 'assistant' }];
+              });
+            }
+          } catch {
+            textBuffer = line + '\n' + textBuffer;
+            break;
+          }
+        }
+      }
+
+      // Finalize message with proper id
+      setMessages(prev => prev.map((m, i) => i === prev.length - 1 && m.id === -1 ? { ...m, id: Date.now() } : m));
+    } catch (e) {
+      console.error('Chat error:', e);
+      toast.error('Failed to get response. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -63,14 +129,21 @@ const AIChatbot = () => {
               <button onClick={() => setIsOpen(false)}><X className="w-4 h-4 text-muted-foreground" /></button>
             </div>
 
-            <div className="h-72 overflow-y-auto p-4 space-y-3">
+            <div ref={scrollRef} className="h-72 overflow-y-auto p-4 space-y-3">
               {messages.map((msg) => (
-                <div key={msg.id} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
-                  <div className={`max-w-[80%] rounded-xl px-4 py-2 text-sm ${msg.isBot ? 'bg-muted text-foreground' : 'bg-primary text-primary-foreground'}`}>
-                    {msg.text}
+                <div key={msg.id} className={`flex ${msg.role === 'assistant' ? 'justify-start' : 'justify-end'}`}>
+                  <div className={`max-w-[80%] rounded-xl px-4 py-2 text-sm whitespace-pre-wrap ${msg.role === 'assistant' ? 'bg-muted text-foreground' : 'bg-primary text-primary-foreground'}`}>
+                    {msg.content}
                   </div>
                 </div>
               ))}
+              {isLoading && messages[messages.length - 1]?.role === 'user' && (
+                <div className="flex justify-start">
+                  <div className="bg-muted rounded-xl px-4 py-2">
+                    <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="p-3 border-t border-border flex gap-2">
@@ -80,8 +153,11 @@ const AIChatbot = () => {
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                 placeholder="Ask me anything..."
                 className="text-sm"
+                disabled={isLoading}
               />
-              <Button size="icon" onClick={sendMessage}><Send className="w-4 h-4" /></Button>
+              <Button size="icon" onClick={sendMessage} disabled={isLoading}>
+                <Send className="w-4 h-4" />
+              </Button>
             </div>
           </motion.div>
         )}
