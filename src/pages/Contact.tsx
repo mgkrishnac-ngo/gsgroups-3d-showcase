@@ -135,10 +135,13 @@ const Contact = () => {
                   />
                 </div>
                 
-                <Button type="submit" className="btn-hero w-full">
-                  Send Message <Send className="ml-2 w-4 h-4" />
+                <Button type="submit" className="btn-hero w-full" disabled={loading}>
+                  {loading ? 'Sending...' : 'Send Message'} <Send className="ml-2 w-4 h-4" />
                 </Button>
               </form>
+              <div className="mt-6">
+                <SocialShare />
+              </div>
             </motion.div>
             
             {/* Contact Info */}
