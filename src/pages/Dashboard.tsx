@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { User, Settings, CreditCard, BarChart3, LogOut, FileText, Crown, Loader2, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { User, Settings, CreditCard, BarChart3, LogOut, FileText, Crown, Loader2, CheckCircle, XCircle, Clock, Mail, Users, DollarSign } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -21,18 +21,50 @@ interface Payment {
   razorpay_payment_id: string | null;
 }
 
+interface AdminStats {
+  contactCount: number;
+  subscriberCount: number;
+  paymentCount: number;
+  totalRevenue: number;
+}
+
 const Dashboard = () => {
   const { user, userRole, signOut } = useAuth();
   const navigate = useNavigate();
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPlan, setCurrentPlan] = useState<Payment | null>(null);
+  const [adminStats, setAdminStats] = useState<AdminStats>({ contactCount: 0, subscriberCount: 0, paymentCount: 0, totalRevenue: 0 });
+  const [statsLoading, setStatsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
       fetchPayments();
+      if (userRole === 'admin') {
+        fetchAdminStats();
+      }
     }
-  }, [user]);
+  }, [user, userRole]);
+
+  const fetchAdminStats = async () => {
+    setStatsLoading(true);
+    const [contactRes, subscriberRes, paymentRes] = await Promise.all([
+      supabase.from('contact_submissions').select('id', { count: 'exact', head: true }),
+      supabase.from('newsletter_subscribers').select('id', { count: 'exact', head: true }),
+      supabase.from('payments').select('amount, status'),
+    ]);
+
+    const paidPayments = paymentRes.data?.filter((p) => p.status === 'paid') || [];
+    const totalRevenue = paidPayments.reduce((sum, p) => sum + p.amount, 0);
+
+    setAdminStats({
+      contactCount: contactRes.count || 0,
+      subscriberCount: subscriberRes.count || 0,
+      paymentCount: paymentRes.data?.length || 0,
+      totalRevenue,
+    });
+    setStatsLoading(false);
+  };
 
   const fetchPayments = async () => {
     setLoading(true);
@@ -208,22 +240,56 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <Link to="/admin/cms">
-                    <Button className="mb-4"><FileText className="w-4 h-4 mr-2" />Open CMS Dashboard</Button>
+                    <Button className="mb-6"><FileText className="w-4 h-4 mr-2" />Open CMS Dashboard</Button>
                   </Link>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-muted rounded-lg p-4">
-                      <p className="text-sm text-muted-foreground">Contact Submissions</p>
-                      <p className="text-2xl font-bold text-primary mt-1">—</p>
+                  
+                  {statsLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="w-6 h-6 animate-spin text-primary" />
                     </div>
-                    <div className="bg-muted rounded-lg p-4">
-                      <p className="text-sm text-muted-foreground">Newsletter Subscribers</p>
-                      <p className="text-2xl font-bold text-secondary mt-1">—</p>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-5 border border-primary/20">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                            <Mail className="w-5 h-5 text-primary" />
+                          </div>
+                          <p className="text-sm text-muted-foreground">Contact Submissions</p>
+                        </div>
+                        <p className="text-3xl font-bold text-primary">{adminStats.contactCount}</p>
+                      </div>
+                      
+                      <div className="bg-gradient-to-br from-secondary/10 to-secondary/5 rounded-xl p-5 border border-secondary/20">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center">
+                            <Users className="w-5 h-5 text-secondary" />
+                          </div>
+                          <p className="text-sm text-muted-foreground">Newsletter Subscribers</p>
+                        </div>
+                        <p className="text-3xl font-bold text-secondary">{adminStats.subscriberCount}</p>
+                      </div>
+                      
+                      <div className="bg-gradient-to-br from-accent/10 to-accent/5 rounded-xl p-5 border border-accent/20">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
+                            <CreditCard className="w-5 h-5 text-accent" />
+                          </div>
+                          <p className="text-sm text-muted-foreground">Total Payments</p>
+                        </div>
+                        <p className="text-3xl font-bold text-accent">{adminStats.paymentCount}</p>
+                      </div>
+                      
+                      <div className="bg-gradient-to-br from-green-500/10 to-green-500/5 rounded-xl p-5 border border-green-500/20">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                            <DollarSign className="w-5 h-5 text-green-500" />
+                          </div>
+                          <p className="text-sm text-muted-foreground">Total Revenue</p>
+                        </div>
+                        <p className="text-3xl font-bold text-green-500">₹{adminStats.totalRevenue.toLocaleString('en-IN')}</p>
+                      </div>
                     </div>
-                    <div className="bg-muted rounded-lg p-4">
-                      <p className="text-sm text-muted-foreground">Total Payments</p>
-                      <p className="text-2xl font-bold text-accent mt-1">{payments.length}</p>
-                    </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             )}
