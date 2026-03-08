@@ -240,22 +240,56 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <Link to="/admin/cms">
-                    <Button className="mb-4"><FileText className="w-4 h-4 mr-2" />Open CMS Dashboard</Button>
+                    <Button className="mb-6"><FileText className="w-4 h-4 mr-2" />Open CMS Dashboard</Button>
                   </Link>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-muted rounded-lg p-4">
-                      <p className="text-sm text-muted-foreground">Contact Submissions</p>
-                      <p className="text-2xl font-bold text-primary mt-1">—</p>
+                  
+                  {statsLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="w-6 h-6 animate-spin text-primary" />
                     </div>
-                    <div className="bg-muted rounded-lg p-4">
-                      <p className="text-sm text-muted-foreground">Newsletter Subscribers</p>
-                      <p className="text-2xl font-bold text-secondary mt-1">—</p>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-5 border border-primary/20">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                            <Mail className="w-5 h-5 text-primary" />
+                          </div>
+                          <p className="text-sm text-muted-foreground">Contact Submissions</p>
+                        </div>
+                        <p className="text-3xl font-bold text-primary">{adminStats.contactCount}</p>
+                      </div>
+                      
+                      <div className="bg-gradient-to-br from-secondary/10 to-secondary/5 rounded-xl p-5 border border-secondary/20">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center">
+                            <Users className="w-5 h-5 text-secondary" />
+                          </div>
+                          <p className="text-sm text-muted-foreground">Newsletter Subscribers</p>
+                        </div>
+                        <p className="text-3xl font-bold text-secondary">{adminStats.subscriberCount}</p>
+                      </div>
+                      
+                      <div className="bg-gradient-to-br from-accent/10 to-accent/5 rounded-xl p-5 border border-accent/20">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
+                            <CreditCard className="w-5 h-5 text-accent" />
+                          </div>
+                          <p className="text-sm text-muted-foreground">Total Payments</p>
+                        </div>
+                        <p className="text-3xl font-bold text-accent">{adminStats.paymentCount}</p>
+                      </div>
+                      
+                      <div className="bg-gradient-to-br from-green-500/10 to-green-500/5 rounded-xl p-5 border border-green-500/20">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                            <DollarSign className="w-5 h-5 text-green-500" />
+                          </div>
+                          <p className="text-sm text-muted-foreground">Total Revenue</p>
+                        </div>
+                        <p className="text-3xl font-bold text-green-500">₹{adminStats.totalRevenue.toLocaleString('en-IN')}</p>
+                      </div>
                     </div>
-                    <div className="bg-muted rounded-lg p-4">
-                      <p className="text-sm text-muted-foreground">Total Payments</p>
-                      <p className="text-2xl font-bold text-accent mt-1">{payments.length}</p>
-                    </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             )}
