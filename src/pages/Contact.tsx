@@ -129,7 +129,8 @@ const Contact = () => {
                 <div className="space-y-2">
                   <Label htmlFor="message">Message</Label>
                   <Textarea 
-                    id="message" 
+                    id="message"
+                    name="message"
                     placeholder="Tell us about your project..." 
                     rows={5}
                     className="bg-muted/50"
