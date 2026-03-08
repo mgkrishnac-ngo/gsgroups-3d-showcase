@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { User, Settings, CreditCard, BarChart3, LogOut, FileText, Crown, Loader2, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { User, Settings, CreditCard, BarChart3, LogOut, FileText, Crown, Loader2, CheckCircle, XCircle, Clock, Mail, Users, DollarSign } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -21,18 +21,50 @@ interface Payment {
   razorpay_payment_id: string | null;
 }
 
+interface AdminStats {
+  contactCount: number;
+  subscriberCount: number;
+  paymentCount: number;
+  totalRevenue: number;
+}
+
 const Dashboard = () => {
   const { user, userRole, signOut } = useAuth();
   const navigate = useNavigate();
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPlan, setCurrentPlan] = useState<Payment | null>(null);
+  const [adminStats, setAdminStats] = useState<AdminStats>({ contactCount: 0, subscriberCount: 0, paymentCount: 0, totalRevenue: 0 });
+  const [statsLoading, setStatsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
       fetchPayments();
+      if (userRole === 'admin') {
+        fetchAdminStats();
+      }
     }
-  }, [user]);
+  }, [user, userRole]);
+
+  const fetchAdminStats = async () => {
+    setStatsLoading(true);
+    const [contactRes, subscriberRes, paymentRes] = await Promise.all([
+      supabase.from('contact_submissions').select('id', { count: 'exact', head: true }),
+      supabase.from('newsletter_subscribers').select('id', { count: 'exact', head: true }),
+      supabase.from('payments').select('amount, status'),
+    ]);
+
+    const paidPayments = paymentRes.data?.filter((p) => p.status === 'paid') || [];
+    const totalRevenue = paidPayments.reduce((sum, p) => sum + p.amount, 0);
+
+    setAdminStats({
+      contactCount: contactRes.count || 0,
+      subscriberCount: subscriberRes.count || 0,
+      paymentCount: paymentRes.data?.length || 0,
+      totalRevenue,
+    });
+    setStatsLoading(false);
+  };
 
   const fetchPayments = async () => {
     setLoading(true);
