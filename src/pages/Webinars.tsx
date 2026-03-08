@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, MapPin, Video, Clock } from 'lucide-react';
+import { AuroraWaves, ParticleWave } from '@/components/HeroAnimations';
 
 const upcomingEvents = [
   {
