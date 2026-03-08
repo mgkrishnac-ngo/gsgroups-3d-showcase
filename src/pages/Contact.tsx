@@ -26,10 +26,31 @@ const contactInfo = [
 ];
 
 const Contact = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    setLoading(true);
+    const { error } = await supabase.from('contact_submissions').insert({
+      name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+      email: formData.get('email') as string,
+      company: formData.get('company') as string,
+      service_interest: formData.get('service') as string,
+      message: formData.get('message') as string,
+    });
+    setLoading(false);
+    if (error) { toast.error('Failed to send. Please try again.'); return; }
+    toast.success('Message sent! We will get back to you soon.');
+    form.reset();
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-16">
+      <section className="pt-32 pb-16 relative overflow-hidden">
+        <AuroraWaves />
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
