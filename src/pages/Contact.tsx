@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { 
   Mail, 
   Phone, 
@@ -13,6 +13,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import Layout from '@/components/layout/Layout';
+import SocialShare, { GoogleMapEmbed } from '@/components/SocialShare';
+import { AuroraWaves } from '@/components/HeroAnimations';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'hello@gsgroups.com', href: 'mailto:hello@gsgroups.com' },
@@ -22,10 +26,31 @@ const contactInfo = [
 ];
 
 const Contact = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    setLoading(true);
+    const { error } = await supabase.from('contact_submissions').insert({
+      name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+      email: formData.get('email') as string,
+      company: formData.get('company') as string,
+      service_interest: formData.get('service') as string,
+      message: formData.get('message') as string,
+    });
+    setLoading(false);
+    if (error) { toast.error('Failed to send. Please try again.'); return; }
+    toast.success('Message sent! We will get back to you soon.');
+    form.reset();
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-16">
+      <section className="pt-32 pb-16 relative overflow-hidden">
+        <AuroraWaves />
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -110,10 +135,13 @@ const Contact = () => {
                   />
                 </div>
                 
-                <Button type="submit" className="btn-hero w-full">
-                  Send Message <Send className="ml-2 w-4 h-4" />
+                <Button type="submit" className="btn-hero w-full" disabled={loading}>
+                  {loading ? 'Sending...' : 'Send Message'} <Send className="ml-2 w-4 h-4" />
                 </Button>
               </form>
+              <div className="mt-6">
+                <SocialShare />
+              </div>
             </motion.div>
             
             {/* Contact Info */}
@@ -151,15 +179,7 @@ const Contact = () => {
                 ))}
               </div>
               
-              {/* Map Placeholder */}
-              <div className="glass-card rounded-2xl overflow-hidden h-64">
-                <div className="w-full h-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-primary mx-auto mb-3" />
-                    <p className="text-muted-foreground">Interactive Map</p>
-                  </div>
-                </div>
-              </div>
+              <GoogleMapEmbed address="123 Innovation Drive, Tech City" />
             </motion.div>
           </div>
         </div>

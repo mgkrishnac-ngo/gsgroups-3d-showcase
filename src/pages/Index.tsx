@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { GradientMorphOrbs, FloatingGridLines, ParticleWave, DiagonalSweep, PulsingRings, AuroraWaves } from '@/components/HeroAnimations';
 import { 
   ArrowRight, 
   Sparkles, 
@@ -166,6 +167,11 @@ const Index = () => {
             <NeuralNetworkScene className="opacity-60" />
           </Suspense>
         </div>
+        
+        {/* Hero Animations */}
+        <GradientMorphOrbs />
+        <FloatingGridLines />
+        <ParticleWave />
         
         {/* Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background z-10" />
@@ -346,7 +352,9 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 relative z-20 bg-muted/30">
+      <section className="py-24 relative z-20 bg-muted/30 overflow-hidden">
+        <DiagonalSweep />
+        <PulsingRings />
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Content */}
