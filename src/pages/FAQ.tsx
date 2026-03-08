@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { MessageCircle, Search, HelpCircle, Mail, Phone } from 'lucide-react';
+import { FloatingGridLines, GradientMorphOrbs } from '@/components/HeroAnimations';
 
 const faqCategories = [
   {
@@ -85,7 +86,9 @@ const FAQ = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 relative overflow-hidden">
+        <FloatingGridLines />
+        <GradientMorphOrbs />
         <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

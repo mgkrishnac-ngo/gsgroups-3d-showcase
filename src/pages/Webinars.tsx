@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, MapPin, Video, Clock } from 'lucide-react';
+import { AuroraWaves, ParticleWave } from '@/components/HeroAnimations';
 
 const upcomingEvents = [
   {
@@ -58,7 +59,9 @@ const Webinars = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 relative overflow-hidden">
+        <AuroraWaves />
+        <ParticleWave />
         <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
+import { DiagonalSweep, PulsingRings } from '@/components/HeroAnimations';
 
 const caseStudies = [
   {
@@ -71,7 +72,9 @@ const CaseStudies = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-16">
+      <section className="pt-32 pb-16 relative overflow-hidden">
+        <DiagonalSweep />
+        <PulsingRings />
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

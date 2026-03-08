@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { ArrowRight, TrendingUp, Building2, ShoppingCart, Stethoscope, GraduationCap, Factory } from 'lucide-react';
+import { GradientMorphOrbs, PulsingRings } from '@/components/HeroAnimations';
 
 const industries = [
   {
@@ -61,7 +62,9 @@ const Industries = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 relative overflow-hidden">
+        <GradientMorphOrbs />
+        <PulsingRings />
         <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

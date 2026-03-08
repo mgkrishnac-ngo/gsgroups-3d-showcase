@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
+import { GradientMorphOrbs, FloatingGridLines } from '@/components/HeroAnimations';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight,
@@ -45,6 +46,8 @@ const About = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-20">
+        <GradientMorphOrbs />
+        <FloatingGridLines />
         <div className="absolute inset-0 z-0 opacity-40">
           <Suspense fallback={<div className="w-full h-full bg-muted/20" />}>
             <FloatingElement shape="icosahedron" color="#667eea" distort />

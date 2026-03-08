@@ -87,32 +87,33 @@ const Contact = () => {
                 <h2 className="text-2xl font-display font-bold">Send a Message</h2>
               </div>
               
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" placeholder="John" className="bg-muted/50" />
+                    <Input id="firstName" name="firstName" placeholder="John" className="bg-muted/50" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" placeholder="Doe" className="bg-muted/50" />
+                    <Input id="lastName" name="lastName" placeholder="Doe" className="bg-muted/50" />
                   </div>
                 </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" className="bg-muted/50" />
+                  <Input id="email" name="email" type="email" placeholder="john@example.com" className="bg-muted/50" />
                 </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="company">Company</Label>
-                  <Input id="company" placeholder="Your Company" className="bg-muted/50" />
+                  <Input id="company" name="company" placeholder="Your Company" className="bg-muted/50" />
                 </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="service">Service Interested In</Label>
                   <select 
-                    id="service" 
+                    id="service"
+                    name="service"
                     className="w-full px-3 py-2 rounded-md bg-muted/50 border border-border focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="">Select a service</option>
@@ -128,7 +129,8 @@ const Contact = () => {
                 <div className="space-y-2">
                   <Label htmlFor="message">Message</Label>
                   <Textarea 
-                    id="message" 
+                    id="message"
+                    name="message"
                     placeholder="Tell us about your project..." 
                     rows={5}
                     className="bg-muted/50"
