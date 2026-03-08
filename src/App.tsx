@@ -2,9 +2,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import PageTransition from "@/components/PageTransition";
 import AIChatbot from "@/components/AIChatbot";
 import { WhatsAppCTA } from "@/components/SocialShare";
 import Index from "./pages/Index";
@@ -42,6 +44,49 @@ import AdminCMS from "./pages/AdminCMS";
 
 const queryClient = new QueryClient();
 
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <PageTransition key={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/services/:slug" element={<ServiceDetail />} />
+          <Route path="/case-studies" element={<CaseStudies />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostDetail />} />
+          <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/partners" element={<Partners />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/refund" element={<Refund />} />
+          <Route path="/newsletter" element={<Newsletter />} />
+          <Route path="/demo" element={<Demo />} />
+          <Route path="/consultation" element={<Consultation />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/industries" element={<Industries />} />
+          <Route path="/success-stories" element={<SuccessStories />} />
+          <Route path="/webinars" element={<Webinars />} />
+          <Route path="/tech-stack" element={<TechStack />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/admin/cms" element={<ProtectedRoute><AdminCMS /></ProtectedRoute>} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </PageTransition>
+    </AnimatePresence>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -49,39 +94,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:slug" element={<ServiceDetail />} />
-            <Route path="/case-studies" element={<CaseStudies />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogPostDetail />} />
-            <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/partners" element={<Partners />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/refund" element={<Refund />} />
-            <Route path="/newsletter" element={<Newsletter />} />
-            <Route path="/demo" element={<Demo />} />
-            <Route path="/consultation" element={<Consultation />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/industries" element={<Industries />} />
-            <Route path="/success-stories" element={<SuccessStories />} />
-            <Route path="/webinars" element={<Webinars />} />
-            <Route path="/tech-stack" element={<TechStack />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/admin/cms" element={<ProtectedRoute><AdminCMS /></ProtectedRoute>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AnimatedRoutes />
           <AIChatbot />
           <WhatsAppCTA />
         </BrowserRouter>
