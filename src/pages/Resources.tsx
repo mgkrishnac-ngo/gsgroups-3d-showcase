@@ -15,6 +15,7 @@ import {
   CheckCircle,
   ArrowRight
 } from 'lucide-react';
+import { ParticleWave } from '@/components/HeroAnimations';
 
 const FloatingToolbox = () => (
   <Float speed={2} rotationIntensity={0.5} floatIntensity={1.5}>
