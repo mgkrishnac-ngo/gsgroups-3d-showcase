@@ -300,6 +300,14 @@ const AdminCMS = () => {
                   </>
                 )}
               </TabsContent>
+
+              <TabsContent value="contacts">
+                <ContactSubmissionsTab />
+              </TabsContent>
+
+              <TabsContent value="bookings">
+                <ConsultationBookingsTab />
+              </TabsContent>
             </Tabs>
           </motion.div>
         </div>
