@@ -179,15 +179,7 @@ const Contact = () => {
                 ))}
               </div>
               
-              {/* Map Placeholder */}
-              <div className="glass-card rounded-2xl overflow-hidden h-64">
-                <div className="w-full h-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-primary mx-auto mb-3" />
-                    <p className="text-muted-foreground">Interactive Map</p>
-                  </div>
-                </div>
-              </div>
+              <GoogleMapEmbed address="123 Innovation Drive, Tech City" />
             </motion.div>
           </div>
         </div>

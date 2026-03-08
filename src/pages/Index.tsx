@@ -352,7 +352,9 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 relative z-20 bg-muted/30">
+      <section className="py-24 relative z-20 bg-muted/30 overflow-hidden">
+        <DiagonalSweep />
+        <PulsingRings />
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Content */}
