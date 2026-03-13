@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import gsLogo from '@/assets/gsgroups-logo.png';
 import { Button } from '@/components/ui/button';
 
 const services = [
