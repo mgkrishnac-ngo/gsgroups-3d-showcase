@@ -8,7 +8,7 @@ interface SocialShareProps {
   phoneNumber?: string;
 }
 
-const SocialShare = ({ title = 'GSGROUPS - AI Solutions', url, phoneNumber = '+1234567890' }: SocialShareProps) => {
+const SocialShare = ({ title = 'GSGROUPS - AI Solutions', url, phoneNumber = '+918884162999' }: SocialShareProps) => {
   const shareUrl = url || window.location.href;
   const encodedUrl = encodeURIComponent(shareUrl);
   const encodedTitle = encodeURIComponent(title);
