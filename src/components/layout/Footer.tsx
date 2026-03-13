@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
@@ -9,10 +10,14 @@ import {
   Phone, 
   MapPin,
   ArrowUpRight,
-  Send
+  Send,
+  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import gsLogo from '@/assets/gsgroups-logo.png';
 
 const services = [
   { name: 'AI Apps', href: '/services/ai-apps' },
@@ -51,13 +56,30 @@ const legal = [
 ];
 
 const socials = [
-  { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/gsgroups' },
-  { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/gsgroups' },
-  { name: 'GitHub', icon: Github, href: 'https://github.com/gsgroups' },
-  { name: 'YouTube', icon: Youtube, href: 'https://youtube.com/@gsgroups' },
+  { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/gsaborgs' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/gsaborgs' },
+  { name: 'GitHub', icon: Github, href: 'https://github.com/gsaborgs' },
+  { name: 'YouTube', icon: Youtube, href: 'https://youtube.com/@gsaborgs' },
 ];
 
 const Footer = () => {
+  const [footerEmail, setFooterEmail] = useState('');
+  const [subscribing, setSubscribing] = useState(false);
+
+  const handleFooterSubscribe = async () => {
+    if (!footerEmail) return;
+    setSubscribing(true);
+    const { error } = await supabase.from('newsletter_subscribers').insert({ email: footerEmail });
+    setSubscribing(false);
+    if (error) {
+      if (error.code === '23505') toast.info('You are already subscribed!');
+      else toast.error('Failed to subscribe. Try again.');
+      return;
+    }
+    toast.success('Subscribed successfully!');
+    setFooterEmail('');
+  };
+
   return (
     <footer className="relative bg-card border-t border-border overflow-hidden">
       {/* Wave Separator */}
@@ -72,9 +94,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2 space-y-6">
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center overflow-hidden">
-                <span className="text-primary-foreground font-orbitron font-bold text-xl">GS</span>
-              </div>
+              <img src={gsLogo} alt="GSGROUPS Logo" className="w-12 h-12 rounded-xl object-contain" />
               <span className="font-display font-bold text-2xl gradient-text">GSGROUPS</span>
             </Link>
             
@@ -89,11 +109,13 @@ const Footer = () => {
               <div className="flex gap-2">
                 <Input 
                   type="email" 
-                  placeholder="Enter your email" 
+                  placeholder="Enter your email"
+                  value={footerEmail}
+                  onChange={(e) => setFooterEmail(e.target.value)}
                   className="bg-muted/50 border-border focus:border-primary"
                 />
-                <Button className="btn-hero px-4">
-                  <Send className="w-4 h-4" />
+                <Button className="btn-hero px-4" onClick={handleFooterSubscribe} disabled={subscribing}>
+                  {subscribing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 </Button>
               </div>
             </div>
@@ -156,18 +178,18 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-muted-foreground">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <span>123 Innovation Drive<br />Tech City, TC 12345</span>
+                <span>Bengaluru, Karnataka<br />India 560001</span>
               </li>
               <li className="flex items-center gap-3 text-muted-foreground">
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                <a href="mailto:hello@gsgroups.com" className="hover:text-primary transition-colors">
-                  hello@gsgroups.com
+                <a href="mailto:contact@gsgroups.in" className="hover:text-primary transition-colors">
+                  contact@gsgroups.in
                 </a>
               </li>
               <li className="flex items-center gap-3 text-muted-foreground">
                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                <a href="tel:+1234567890" className="hover:text-primary transition-colors">
-                  +1 (234) 567-890
+                <a href="tel:+918884162999" className="hover:text-primary transition-colors">
+                  +91 88841 62999
                 </a>
               </li>
             </ul>

@@ -19,10 +19,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 const contactInfo = [
-  { icon: Mail, label: 'Email', value: 'hello@gsgroups.com', href: 'mailto:hello@gsgroups.com' },
-  { icon: Phone, label: 'Phone', value: '+1 (234) 567-890', href: 'tel:+1234567890' },
-  { icon: MapPin, label: 'Address', value: '123 Innovation Drive, Tech City, TC 12345', href: '#' },
-  { icon: Clock, label: 'Hours', value: 'Mon - Fri: 9AM - 6PM EST', href: '#' },
+  { icon: Mail, label: 'Email', value: 'contact@gsgroups.in', href: 'mailto:contact@gsgroups.in' },
+  { icon: Phone, label: 'Phone', value: '+91 88841 62999', href: 'tel:+918884162999' },
+  { icon: MapPin, label: 'Address', value: 'Bengaluru, Karnataka, India 560001', href: '#' },
+  { icon: Clock, label: 'Hours', value: 'Mon - Sat: 9AM - 7PM IST', href: '#' },
 ];
 
 const Contact = () => {
@@ -181,7 +181,7 @@ const Contact = () => {
                 ))}
               </div>
               
-              <GoogleMapEmbed address="123 Innovation Drive, Tech City" />
+              <GoogleMapEmbed address="Bengaluru, Karnataka, India" />
             </motion.div>
           </div>
         </div>

@@ -8,7 +8,7 @@ interface SocialShareProps {
   phoneNumber?: string;
 }
 
-const SocialShare = ({ title = 'GSGROUPS - AI Solutions', url, phoneNumber = '+1234567890' }: SocialShareProps) => {
+const SocialShare = ({ title = 'GSGROUPS - AI Solutions', url, phoneNumber = '+918884162999' }: SocialShareProps) => {
   const shareUrl = url || window.location.href;
   const encodedUrl = encodeURIComponent(shareUrl);
   const encodedTitle = encodeURIComponent(title);
@@ -61,7 +61,7 @@ const SocialShare = ({ title = 'GSGROUPS - AI Solutions', url, phoneNumber = '+1
   );
 };
 
-export const WhatsAppCTA = ({ phoneNumber = '+1234567890', message = 'Hi! I am interested in your AI services.' }) => (
+export const WhatsAppCTA = ({ phoneNumber = '+918884162999', message = 'Hi! I am interested in your AI services.' }) => (
   <motion.a
     href={`https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`}
     target="_blank"

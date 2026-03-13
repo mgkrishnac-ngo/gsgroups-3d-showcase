@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import gsLogo from '@/assets/gsgroups-logo.png';
 import { Button } from '@/components/ui/button';
 
 const services = [
@@ -90,12 +91,11 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <motion.div
-              className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center overflow-hidden"
+              className="relative w-10 h-10 rounded-xl overflow-hidden"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="text-primary-foreground font-orbitron font-bold text-lg">GS</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              <img src={gsLogo} alt="GSGROUPS" className="w-full h-full object-contain" />
             </motion.div>
             <span className="font-display font-bold text-xl gradient-text">GSGROUPS</span>
           </Link>

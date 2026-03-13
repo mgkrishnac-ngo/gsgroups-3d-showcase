@@ -2,6 +2,9 @@ import { Suspense, lazy } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GradientMorphOrbs, FloatingGridLines, ParticleWave, DiagonalSweep, PulsingRings, AuroraWaves } from '@/components/HeroAnimations';
+import teamCeoImg from '@/assets/team-ceo.jpg';
+import teamCtoImg from '@/assets/team-cto.jpg';
+import teamDesignImg from '@/assets/team-design.jpg';
 import { 
   ArrowRight, 
   Sparkles, 
@@ -125,21 +128,21 @@ const stats = [
 const testimonials = [
   {
     quote: "GSGROUPS transformed our business with their AI solutions. Our efficiency increased by 300% within months.",
-    author: "Sarah Chen",
-    role: "CTO, TechVentures Inc",
-    avatar: "/placeholder.svg"
+    author: "Ananya Sharma",
+    role: "CTO, NexaTech Solutions",
+    avatar: teamCtoImg
   },
   {
     quote: "The best tech partner we've ever worked with. Their team delivers exceptional quality consistently.",
-    author: "Michael Roberts",
+    author: "Vikram Patel",
     role: "CEO, DataFlow Systems",
-    avatar: "/placeholder.svg"
+    avatar: teamCeoImg
   },
   {
     quote: "Their AI agents handle 80% of our customer inquiries automatically. Game changer for our support team.",
-    author: "Emily Watson",
+    author: "Priya Nair",
     role: "VP Operations, ScaleUp Co",
-    avatar: "/placeholder.svg"
+    avatar: teamDesignImg
   },
 ];
 
@@ -239,17 +242,28 @@ const Index = () => {
             </motion.div>
             
             {/* Trust Indicators */}
+            {/* Auto-scrolling Brand Carousel */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-16 flex flex-wrap items-center justify-center gap-8 text-muted-foreground text-sm"
+              className="mt-16"
             >
-              <span>Trusted by:</span>
-              <div className="flex items-center gap-8 opacity-60">
-                {['TechCorp', 'DataFlow', 'ScaleUp', 'InnovateLab', 'FutureTech'].map((company) => (
-                  <span key={company} className="font-semibold">{company}</span>
-                ))}
+              <p className="text-muted-foreground text-sm text-center mb-6">Trusted by leading companies</p>
+              <div className="relative overflow-hidden">
+                <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
+                <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
+                <div className="flex animate-scroll-left gap-12 items-center">
+                  {[...Array(2)].map((_, setIdx) => (
+                    <div key={setIdx} className="flex gap-12 items-center shrink-0">
+                      {['Infosys', 'Wipro', 'TCS', 'Flipkart', 'Razorpay', 'Swiggy', 'PhonePe', 'Ola'].map((company) => (
+                        <span key={`${setIdx}-${company}`} className="text-muted-foreground/60 font-display font-bold text-lg whitespace-nowrap hover:text-primary transition-colors">
+                          {company}
+                        </span>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </div>
