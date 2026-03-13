@@ -128,21 +128,21 @@ const stats = [
 const testimonials = [
   {
     quote: "GSGROUPS transformed our business with their AI solutions. Our efficiency increased by 300% within months.",
-    author: "Sarah Chen",
-    role: "CTO, TechVentures Inc",
-    avatar: "/placeholder.svg"
+    author: "Ananya Sharma",
+    role: "CTO, NexaTech Solutions",
+    avatar: teamCtoImg
   },
   {
     quote: "The best tech partner we've ever worked with. Their team delivers exceptional quality consistently.",
-    author: "Michael Roberts",
+    author: "Vikram Patel",
     role: "CEO, DataFlow Systems",
-    avatar: "/placeholder.svg"
+    avatar: teamCeoImg
   },
   {
     quote: "Their AI agents handle 80% of our customer inquiries automatically. Game changer for our support team.",
-    author: "Emily Watson",
+    author: "Priya Nair",
     role: "VP Operations, ScaleUp Co",
-    avatar: "/placeholder.svg"
+    avatar: teamDesignImg
   },
 ];
 

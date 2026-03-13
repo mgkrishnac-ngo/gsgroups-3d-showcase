@@ -61,7 +61,7 @@ const SocialShare = ({ title = 'GSGROUPS - AI Solutions', url, phoneNumber = '+9
   );
 };
 
-export const WhatsAppCTA = ({ phoneNumber = '+1234567890', message = 'Hi! I am interested in your AI services.' }) => (
+export const WhatsAppCTA = ({ phoneNumber = '+918884162999', message = 'Hi! I am interested in your AI services.' }) => (
   <motion.a
     href={`https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`}
     target="_blank"

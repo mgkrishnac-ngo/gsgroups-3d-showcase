@@ -181,7 +181,7 @@ const Contact = () => {
                 ))}
               </div>
               
-              <GoogleMapEmbed address="123 Innovation Drive, Tech City" />
+              <GoogleMapEmbed address="Bengaluru, Karnataka, India" />
             </motion.div>
           </div>
         </div>

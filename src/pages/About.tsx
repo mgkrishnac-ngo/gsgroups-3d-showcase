@@ -30,10 +30,10 @@ const values = [
 ];
 
 const team = [
-  { name: 'Alex Johnson', role: 'CEO & Founder', image: '/placeholder.svg' },
-  { name: 'Sarah Chen', role: 'CTO', image: '/placeholder.svg' },
-  { name: 'Michael Roberts', role: 'Head of AI', image: '/placeholder.svg' },
-  { name: 'Emily Watson', role: 'Design Director', image: '/placeholder.svg' },
+  { name: 'Praveen Kumar', role: 'CEO & Founder', image: teamCeoImg },
+  { name: 'Ananya Sharma', role: 'CTO', image: teamCtoImg },
+  { name: 'Rahul Menon', role: 'Head of AI', image: teamAiImg },
+  { name: 'Priya Nair', role: 'Design Director', image: teamDesignImg },
 ];
 
 const milestones = [
