@@ -2,6 +2,10 @@ import { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { GradientMorphOrbs, FloatingGridLines } from '@/components/HeroAnimations';
 import { Link } from 'react-router-dom';
+import teamCeoImg from '@/assets/team-ceo.jpg';
+import teamCtoImg from '@/assets/team-cto.jpg';
+import teamAiImg from '@/assets/team-ai-head.jpg';
+import teamDesignImg from '@/assets/team-design.jpg';
 import { 
   ArrowRight,
   Target,
