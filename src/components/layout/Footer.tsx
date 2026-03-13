@@ -94,9 +94,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2 space-y-6">
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center overflow-hidden">
-                <span className="text-primary-foreground font-orbitron font-bold text-xl">GS</span>
-              </div>
+              <img src={gsLogo} alt="GSGROUPS Logo" className="w-12 h-12 rounded-xl object-contain" />
               <span className="font-display font-bold text-2xl gradient-text">GSGROUPS</span>
             </Link>
             
