@@ -5,9 +5,11 @@ import { Float, MeshDistortMaterial } from '@react-three/drei';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Mail, Sparkles, TrendingUp, Lightbulb, Zap } from 'lucide-react';
+import { Mail, Sparkles, TrendingUp, Lightbulb, Zap, Loader2 } from 'lucide-react';
 import { AuroraWaves } from '@/components/HeroAnimations';
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const FloatingEnvelope = () => (
   <Float speed={2} rotationIntensity={0.5} floatIntensity={1.5}>
@@ -32,12 +34,21 @@ const benefits = [
 const Newsletter = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubscribed(true);
+    if (!email) return;
+    setLoading(true);
+    const { error } = await supabase.from('newsletter_subscribers').insert({ email });
+    setLoading(false);
+    if (error) {
+      if (error.code === '23505') toast.info('You are already subscribed!');
+      else toast.error('Failed to subscribe. Please try again.');
+      return;
     }
+    setSubscribed(true);
+    toast.success('Successfully subscribed!');
   };
 
   return (
