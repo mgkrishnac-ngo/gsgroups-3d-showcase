@@ -63,6 +63,23 @@ const socials = [
 ];
 
 const Footer = () => {
+  const [footerEmail, setFooterEmail] = useState('');
+  const [subscribing, setSubscribing] = useState(false);
+
+  const handleFooterSubscribe = async () => {
+    if (!footerEmail) return;
+    setSubscribing(true);
+    const { error } = await supabase.from('newsletter_subscribers').insert({ email: footerEmail });
+    setSubscribing(false);
+    if (error) {
+      if (error.code === '23505') toast.info('You are already subscribed!');
+      else toast.error('Failed to subscribe. Try again.');
+      return;
+    }
+    toast.success('Subscribed successfully!');
+    setFooterEmail('');
+  };
+
   return (
     <footer className="relative bg-card border-t border-border overflow-hidden">
       {/* Wave Separator */}
