@@ -277,6 +277,25 @@ const Pricing = () => {
         </div>
       </section>
 
+      {/* UPI Payment Section */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto max-w-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <h2 className="text-2xl font-bold mb-2">Or Pay via UPI</h2>
+            <p className="text-muted-foreground mb-6">Scan the QR code below to make a direct payment</p>
+            <div className="glass-card p-6 rounded-2xl inline-block mx-auto">
+              <img src={upiQrImg} alt="UPI QR Code - Scan to Pay" className="w-64 h-auto mx-auto rounded-xl" />
+              <p className="text-sm text-muted-foreground mt-4">UPI ID: <span className="font-mono font-semibold text-foreground">8884162999-4@ybl</span></p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* FAQ Teaser */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto text-center">
