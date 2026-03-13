@@ -105,7 +105,10 @@ const Newsletter = () => {
                     type="submit" 
                     size="lg" 
                     className="h-14 px-8 bg-gradient-to-r from-primary to-accent"
+                    disabled={loading}
                   >
+                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>Subscribe <Sparkles className="w-5 h-5 ml-2" /></>}
+                  </Button>
                     Subscribe
                     <Sparkles className="w-5 h-5 ml-2" />
                   </Button>
