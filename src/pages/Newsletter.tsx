@@ -109,9 +109,6 @@ const Newsletter = () => {
                   >
                     {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>Subscribe <Sparkles className="w-5 h-5 ml-2" /></>}
                   </Button>
-                    Subscribe
-                    <Sparkles className="w-5 h-5 ml-2" />
-                  </Button>
                 </div>
                 <p className="text-sm text-muted-foreground mt-4">
                   No spam, ever. Unsubscribe anytime.
