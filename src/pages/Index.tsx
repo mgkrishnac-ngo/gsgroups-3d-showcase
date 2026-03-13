@@ -2,6 +2,9 @@ import { Suspense, lazy } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GradientMorphOrbs, FloatingGridLines, ParticleWave, DiagonalSweep, PulsingRings, AuroraWaves } from '@/components/HeroAnimations';
+import teamCeoImg from '@/assets/team-ceo.jpg';
+import teamCtoImg from '@/assets/team-cto.jpg';
+import teamDesignImg from '@/assets/team-design.jpg';
 import { 
   ArrowRight, 
   Sparkles, 
