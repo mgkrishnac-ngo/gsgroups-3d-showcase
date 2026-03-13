@@ -109,11 +109,13 @@ const Footer = () => {
               <div className="flex gap-2">
                 <Input 
                   type="email" 
-                  placeholder="Enter your email" 
+                  placeholder="Enter your email"
+                  value={footerEmail}
+                  onChange={(e) => setFooterEmail(e.target.value)}
                   className="bg-muted/50 border-border focus:border-primary"
                 />
-                <Button className="btn-hero px-4">
-                  <Send className="w-4 h-4" />
+                <Button className="btn-hero px-4" onClick={handleFooterSubscribe} disabled={subscribing}>
+                  {subscribing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 </Button>
               </div>
             </div>
